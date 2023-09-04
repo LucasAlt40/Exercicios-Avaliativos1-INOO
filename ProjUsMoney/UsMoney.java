@@ -24,12 +24,16 @@ public class UsMoney {
         return cents >= 0;
     }
 
-    private boolean isDollarValid() {
+    public boolean isDollarValid() {
         return dollars >= 0;
     }
 
     private boolean isCentsValidToAdd() {
         return cents > 99;
+    }
+
+    public boolean isMoneyValid() {
+        return  isCentsValid() && isDollarValid();
     }
 
     private void addCentsToDollars() {
@@ -40,10 +44,14 @@ public class UsMoney {
     }
 
     public UsMoney plus(UsMoney usMoney) {
-        int newCents = usMoney.getCents() + this.cents;
-        int newDollars = usMoney.getDollars() + this.dollars;
+        if(usMoney.isMoneyValid() && isMoneyValid()) {
+            int newCents = usMoney.getCents() + this.cents;
+            int newDollars = usMoney.getDollars() + this.dollars;
 
-        return new UsMoney(newDollars, newCents);
+            return new UsMoney(newDollars, newCents);
+        }
+
+        return new UsMoney(-1, -1);
     }
 
     public String mostraValor() {
